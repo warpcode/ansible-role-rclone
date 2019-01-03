@@ -28,10 +28,10 @@
 
 - name: install rclone - unzip package
   unarchive:
-    src: https://github.com/ncw/rclone/releases/download/v{{ rclone_version }}/rclone-v{{ rclone_version }}-linux-amd64.zip
+    src: https://github.com/ncw/rclone/releases/download/{{ rclone_version }}/rclone-{{ rclone_version }}-linux-amd64.zip
     dest: "{{ rclone_setup_tmp_dir}}"
     copy: no
-    creates: '/tmp/rclone_setup/rclone-v{{ rclone_version }}-linux-amd64'
+    creates: '/tmp/rclone_setup/rclone-{{ rclone_version }}-linux-amd64'
   when: rclone_version != 'beta'
   become: yes
 
@@ -57,13 +57,13 @@
     src: https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip
     dest: "{{ rclone_setup_tmp_dir}}"
     copy: no
-    creates: '/tmp/rclone_setup/rclone-v{{ rclone_version }}-linux-amd64'
+    creates: '/tmp/rclone_setup/rclone-{{ rclone_version }}-linux-amd64'
   when: rclone_version_beta
   become: yes
 
 - name: install rclone - copy binary
   copy:
-    src: "{{ rclone_setup_tmp_dir}}/rclone-v{{ rclone_version }}-linux-amd64/rclone"
+    src: "{{ rclone_setup_tmp_dir}}/rclone-{{ rclone_version }}-linux-amd64/rclone"
     dest: "/usr/bin/rclone"
     mode: 0755
     owner: root
@@ -82,7 +82,7 @@
 
 - name: install rclone - copy manpage
   copy:
-    src: "{{ rclone_setup_tmp_dir}}/rclone-v{{ rclone_version }}-linux-amd64/rclone.1"
+    src: "{{ rclone_setup_tmp_dir}}/rclone-{{ rclone_version }}-linux-amd64/rclone.1"
     dest: "{{ rclone_man_pages.path }}/rclone.1"
     mode: 0644
     owner: root
