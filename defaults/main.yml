@@ -4,9 +4,9 @@ rclone_version: "1.42"
 gather_facts: no
 
 # Defaults in case no variables for OS are chosen
-PACKAGES:
+rclone_packages:
   - unzip
 
-MAN_PAGES:
-  OWNER: root
-  GROUP: root
+rclone_man_pages:
+  owner: root
+  group: root

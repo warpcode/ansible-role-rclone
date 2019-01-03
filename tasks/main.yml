@@ -18,7 +18,7 @@
     name: '{{ item }}'
     state: latest
   become: yes
-  with_items: '{{ PACKAGES }}'
+  with_items: '{{ rclone_packages }}'
 
 - name: install rclone - make temp dir
   file:
@@ -73,17 +73,17 @@
 
 - name: install rclone - make dir for local manpages
   file:
-    path: '{{ MAN_PAGES.PATH }}'
+    path: '{{ rclone_man_pages.path }}'
     state: directory
     mode: 0775
-    owner: '{{ MAN_PAGES.OWNER }}'
-    group: '{{ MAN_PAGES.GROUP }}'
+    owner: '{{ rclone_man_pages.owner }}'
+    group: '{{ rclone_man_pages.group }}'
   become: yes
 
 - name: install rclone - copy manpage
   copy:
     src: "{{ rclone_setup_tmp_dir}}/rclone-v{{ rclone_version }}-linux-amd64/rclone.1"
-    dest: "{{ MAN_PAGES.PATH }}/rclone.1"
+    dest: "{{ rclone_man_pages.path }}/rclone.1"
     mode: 0644
     owner: root
     group: root
