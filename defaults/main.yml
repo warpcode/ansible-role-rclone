@@ -4,6 +4,7 @@ rclone_version: "v1.42"
 rclone_path_prefix: /opt/rclone
 rclone_src_dir: "{{ rclone_path_prefix }}/src/rclone"
 rclone_bin_dir: "{{ rclone_path_prefix }}/bin"
+rclone_file: "rclone-{{ rclone_version }}-{{ ansible_system | lower }}-amd64"
 rclone_owner: "root"
 rclone_group: "root"
 
