@@ -17,24 +17,6 @@
 
 - include_tasks: install.yml
 
-- name: install rclone - unzip package
-  unarchive:
-    src: https://github.com/ncw/rclone/releases/download/{{ rclone_version }}/{{ rclone_file }}.zip
-    dest: "{{ rclone_src_dir}}"
-    copy: no
-    creates: '{{ rclone_src_dir}}/{{ rclone_file }}'
-  become: yes
-
-- name: install rclone - copy binary
-  copy:
-    src: "{{ rclone_src_dir}}/{{ rclone_file }}/rclone"
-    dest: "{{ rclone_bin_dir }}/rclone"
-    mode: 0755
-    owner: "{{ rclone_owner }}"
-    group: "{{ rclone_group }}"
-    remote_src: true
-  become: yes
-
 - name: install rclone - make dir for local manpages
   file:
     path: '{{ rclone_man_pages.path }}'
