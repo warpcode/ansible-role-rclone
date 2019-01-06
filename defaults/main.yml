@@ -1,10 +1,12 @@
 ---
 # rclone version can be defined as a release number with a v prefix
-rclone_version: "v1.42"
+rclone_version: "v1.44"
+rclone_arch: amd64
+rclone_system: "{{ ansible_system | lower }}"
 rclone_path_prefix: /opt/rclone
 rclone_src_dir: "{{ rclone_path_prefix }}/src/rclone"
 rclone_bin_dir: "{{ rclone_path_prefix }}/bin"
-rclone_file: "rclone-{{ rclone_version }}-{{ ansible_system | lower }}-amd64"
+rclone_file: "rclone-{{ rclone_version }}-{{ rclone_system }}-{{ rclone_arch }}"
 rclone_owner: "root"
 rclone_group: "root"
 
