@@ -21,6 +21,21 @@
     creates: '{{ rclone_src_dir}}/{{ rclone_file }}'
   become: yes
 
+- name: Collect list of old versions downloaded
+  find:
+    paths: "{{ rclone_src_dir}}"
+    hidden: true
+    recurse: false
+    file_type: directory
+  register: __rclone_collected_directories
+
+- name: Remove old versions
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  when: item.path != rclone_src_dir + '/' + rclone_file
+  with_items: "{{ __rclone_collected_directories.files }}"
+
 - name: install rclone - copy binary
   copy:
     src: "{{ rclone_src_dir}}/{{ rclone_file }}/rclone"
