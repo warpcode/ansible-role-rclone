@@ -1,18 +1,5 @@
 ---
 - name: Build config
-  debug:
-    var: item
-  with_items: >-
-    {%- set __rclone_config = [] -%}
-    {%- for (remote, options) in rclone_config.iteritems() -%}
-      {%- for (key, value) in options.iteritems() -%}
-        {%- set __rclone_config_item = {'group': remote, 'key': key, 'value': value} -%}
-        {{ __rclone_config.append(__rclone_config_item) }}
-      {%- endfor -%}
-    {%- endfor -%}
-    {{ __rclone_config }}
-
-- name: Build config
   ini_file:
     path: "{{ rclone_config_path }}"
     section: "{{ item.group }}"
