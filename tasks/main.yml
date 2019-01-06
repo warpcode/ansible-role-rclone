@@ -17,26 +17,25 @@
 
 - include_tasks: install.yml
 
-- name: install rclone - make dir for local manpages
-  file:
-    path: '{{ rclone_man_pages.path }}'
-    state: directory
-    mode: 0775
-    owner: '{{ rclone_man_pages.owner }}'
-    group: '{{ rclone_man_pages.group }}'
-  become: yes
+- name: Install man pages
+  block: 
+    - name: install rclone - make dir for local manpages
+      file:
+        path: '{{ rclone_man_pages.path }}'
+        state: directory
+        mode: 0775
+        owner: '{{ rclone_man_pages.owner }}'
+        group: '{{ rclone_man_pages.group }}'
+      become: yes
 
-- name: install rclone - copy manpage
-  copy:
-    src: "{{ rclone_src_dir}}/{{ rclone_file }}/rclone.1"
-    dest: "{{ rclone_man_pages.path }}/rclone.1"
-    mode: 0644
-    owner: root
-    group: root
-    remote_src: true
-  become: yes
-
-- name: install rclone - install manpage
-  shell: mandb
-  become: yes
-  changed_when: false
+    - name: install rclone - copy manpage
+      copy:
+        src: "{{ rclone_src_dir}}/{{ rclone_file }}/rclone.1"
+        dest: "{{ rclone_man_pages.path }}/rclone.1"
+        mode: 0644
+        owner: root
+        group: root
+        remote_src: true
+      notify: update mandb
+      become: yes
+  when: rclone_man_pages_install
