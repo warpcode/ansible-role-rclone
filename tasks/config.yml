@@ -19,6 +19,8 @@
     option: "{{ item.key }}"
     value: "{{ item.value }}"
     mode: 0600
+    owner: "{{ rclone_config_owner }}"
+    group: "{{ rclone_config_group }}"
   with_items: >-
     {%- set __rclone_config = [] -%}
     {%- for (remote, options) in rclone_config.iteritems() -%}
