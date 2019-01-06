@@ -1,4 +1,11 @@
 ---
+- name: Install required packages
+  package:
+    name: '{{ item }}'
+    state: present
+  become: yes
+  with_items: '{{ rclone_packages }}'
+
 - name: Ensure dirs exists with correct perms
   file:
     dest: "{{ dirpath }}"

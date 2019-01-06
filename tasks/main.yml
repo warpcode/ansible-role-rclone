@@ -8,11 +8,4 @@
   tags:
     - vars
 
-- name: Install required packages
-  package:
-    name: '{{ item }}'
-    state: present
-  become: yes
-  with_items: '{{ rclone_packages }}'
-
 - include_tasks: install.yml
