@@ -1,6 +1,6 @@
 ---
-# rclone version can be defined as a release number with a v prefix
-rclone_version: "v1.44"
+# rclone version can be defined as a release number (v1.45) or "latest"
+rclone_version: "v1.45"
 rclone_arch: amd64
 rclone_system: "{{ ansible_system | lower }}"
 rclone_path_prefix: /opt/rclone
