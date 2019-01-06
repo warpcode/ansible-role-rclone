@@ -4,7 +4,6 @@ rclone_packages:
   - unzip
   - man-db
 
-rclone_man_pages:
-  owner: root
-  group: root
-  path: '/usr/local/share/man/man1'
+rclone_man_pages_owner: root
+rclone_man_pages_group: root
+rclone_man_pages_path: '/usr/local/share/man/man1'

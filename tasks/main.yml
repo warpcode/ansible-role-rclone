@@ -21,17 +21,17 @@
   block: 
     - name: install rclone - make dir for local manpages
       file:
-        path: '{{ rclone_man_pages.path }}'
+        path: '{{ rclone_man_pages_path }}'
         state: directory
         mode: 0775
-        owner: '{{ rclone_man_pages.owner }}'
-        group: '{{ rclone_man_pages.group }}'
+        owner: '{{ rclone_man_pages_owner }}'
+        group: '{{ rclone_man_pages_group }}'
       become: yes
 
     - name: install rclone - copy manpage
       copy:
         src: "{{ rclone_src_dir}}/{{ rclone_file }}/rclone.1"
-        dest: "{{ rclone_man_pages.path }}/rclone.1"
+        dest: "{{ rclone_man_pages_path }}/rclone.1"
         mode: 0644
         owner: root
         group: root
