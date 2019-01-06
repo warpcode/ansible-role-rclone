@@ -18,3 +18,7 @@ rclone_man_pages_install: true
 rclone_man_pages_owner: root
 rclone_man_pages_group: root
 rclone_man_pages_path: '/usr/local/share/man/man1'
+
+rclone_config_enable: true
+rclone_config_path: /etc/rclone.conf
+rclone_config: []
