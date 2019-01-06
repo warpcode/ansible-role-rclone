@@ -1,0 +1,5 @@
+---
+- name: update mandb
+  shell: mandb
+  become: yes
+  changed_when: false
