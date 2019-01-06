@@ -13,6 +13,21 @@
   loop_control:
     loop_var: dirpath
 
+- name: Get latest version number
+  block:
+    - name: Get latest github info
+      uri:
+        url: https://api.github.com/repos/ncw/rclone/releases/latest
+        method: GET
+        return_content: yes
+      register: rclone_github_info
+      check_mode: no
+    - name: Set/modify fact rclone_version
+      set_fact:
+        rclone_version: "{{ (rclone_github_info.content|from_json).tag_name }}"
+      check_mode: no
+  when: rclone_version == 'latest'
+
 - name: install rclone - unzip package
   unarchive:
     src: https://github.com/ncw/rclone/releases/download/{{ rclone_version }}/{{ rclone_file }}.zip
