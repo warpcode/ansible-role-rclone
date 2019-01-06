@@ -8,10 +8,6 @@
   tags:
     - vars
 
-- name: rclone - define tmpdir
-  set_fact:
-    rclone_setup_tmp_dir: "/tmp/rclone_setup"
-
 - name: Install required packages
   package:
     name: '{{ item }}'
@@ -19,16 +15,12 @@
   become: yes
   with_items: '{{ rclone_packages }}'
 
-- name: install rclone - make temp dir
-  file:
-    path: "{{ rclone_setup_tmp_dir}}"
-    state: directory
-    mode: 0775
+- include_tasks: install.yml
 
 - name: install rclone - unzip package
   unarchive:
     src: https://github.com/ncw/rclone/releases/download/{{ rclone_version }}/rclone-{{ rclone_version }}-linux-amd64.zip
-    dest: "{{ rclone_setup_tmp_dir}}"
+    dest: "{{ rclone_src_dir}}"
     copy: no
     creates: '/tmp/rclone_setup/rclone-{{ rclone_version }}-linux-amd64'
   when: rclone_version != 'beta'
@@ -37,12 +29,12 @@
 - name: install rclone - download file containing current beta version number
   get_url:
     url: https://beta.rclone.org/version.txt
-    dest: '{{ rclone_setup_tmp_dir }}/version.txt'
+    dest: '{{ rclone_src_dir }}/version.txt'
   when: rclone_version == "beta"
 
-- name: install rclone - read in beta version number from {{ rclone_setup_tmp_dir }}/version.txt
+- name: install rclone - read in beta version number from {{ rclone_src_dir }}/version.txt
   slurp:
-    src: '{{ rclone_setup_tmp_dir }}/version.txt'
+    src: '{{ rclone_src_dir }}/version.txt'
   register: rclone_version_beta
   when: rclone_version == 'beta'
 
@@ -54,7 +46,7 @@
 - name: install rclone - unzip package
   unarchive:
     src: https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip
-    dest: "{{ rclone_setup_tmp_dir}}"
+    dest: "{{ rclone_src_dir}}"
     copy: no
     creates: '/tmp/rclone_setup/rclone-{{ rclone_version }}-linux-amd64'
   when: rclone_version_beta
@@ -62,7 +54,7 @@
 
 - name: install rclone - copy binary
   copy:
-    src: "{{ rclone_setup_tmp_dir}}/rclone-{{ rclone_version }}-linux-amd64/rclone"
+    src: "{{ rclone_src_dir}}/rclone-{{ rclone_version }}-linux-amd64/rclone"
     dest: "/usr/bin/rclone"
     mode: 0755
     owner: root
@@ -81,7 +73,7 @@
 
 - name: install rclone - copy manpage
   copy:
-    src: "{{ rclone_setup_tmp_dir}}/rclone-{{ rclone_version }}-linux-amd64/rclone.1"
+    src: "{{ rclone_src_dir}}/rclone-{{ rclone_version }}-linux-amd64/rclone.1"
     dest: "{{ rclone_man_pages.path }}/rclone.1"
     mode: 0644
     owner: root

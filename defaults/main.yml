@@ -1,6 +1,11 @@
 ---
 #rclone version can be defined as a release number or as beta
 rclone_version: "v1.42"
+rclone_path_prefix: /opt/rclone
+rclone_src_dir: "{{ rclone_path_prefix }}/src/rclone"
+rclone_bin_dir: "{{ rclone_path_prefix }}/bin"
+rclone_owner: "root"
+rclone_group: "root"
 
 # Defaults in case no variables for OS are chosen
 rclone_packages:

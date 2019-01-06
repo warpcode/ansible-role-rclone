@@ -1,0 +1,14 @@
+---
+- name: Ensure dirs exists with correct perms
+  file:
+    dest: "{{ dirpath }}"
+    state: directory
+    owner: "{{ rclone_owner }}"
+    group: "{{ rclone_group }}"
+    recurse: no
+  become: yes
+  with_items:
+    - "{{ rclone_src_dir }}"
+    - "{{ rclone_bin_dir }}"
+  loop_control:
+    loop_var: dirpath
