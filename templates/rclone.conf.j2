@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+{% for (remote, options) in rclone_config.iteritems() %}
+
+[{{ remote }}]
+{% for (key, value) in options.iteritems() %}
+{{ key }} = {{ value }}
+{% endfor %}
+{% endfor %}
