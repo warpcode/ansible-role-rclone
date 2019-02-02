@@ -68,6 +68,15 @@
     remote_src: true
   become: yes
 
+- name: install rclone - copy mount script
+  template:
+    src: "rclone_mount.sh.j2"
+    dest: "{{ rclone_bin_dir }}/rclone_mount"
+    mode: 0755
+    owner: "{{ rclone_owner }}"
+    group: "{{ rclone_group }}"
+  become: yes
+
 - name: Install man pages
   block: 
     - name: install rclone - make dir for local manpages
