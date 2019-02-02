@@ -31,4 +31,10 @@ done
 
 # exec rclone
 trans="$trans $remote $mountpoint"
-PATH=$PATH "{{ rclone_bin_dir }}/rclone" mount $trans
+PATH=$PATH "{{ rclone_bin_dir }}/rclone" mount $trans &
+
+out=`ls -l "$mountpoint"`
+until [ "$out" != 'total 0' ]; do
+    out=`ls -l "$mountpoint"`
+    sleep 1
+done
